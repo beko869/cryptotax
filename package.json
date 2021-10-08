@@ -1,0 +1,23 @@
+{
+  "name": "cryptotax",
+  "version": "1.0.0",
+  "description": "compute tax for your crypto profits (austria edition)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "keywords": [
+    "crypto",
+    "tax"
+  ],
+  "author": "Benjamin Kowatsch",
+  "license": "ISC",
+  "dependencies": {
+    "@koa/router": "^10.1.1",
+    "dotenv": "^10.0.0",
+    "koa": "^2.13.3",
+    "koa-bodyparser": "^4.3.0"
+  },
+  "type": "module"
+}
