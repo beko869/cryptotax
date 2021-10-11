@@ -5,8 +5,10 @@ import KoaBodyParser from "koa-bodyparser";
 
 export const app = new Koa();
 
+app.use( KoaBodyParser({ enableTypes: ["json"] }) );
 app.use(async (ctx, next) => {
     try {
+      
       await next();
     } catch (error) {
       console.log(error);
@@ -15,8 +17,6 @@ app.use(async (ctx, next) => {
 
 import {router as baseRouter} from "./routes/base.js";
 import {router as transactionRouter} from "./routes/transaction.js";
-
-app.use( KoaBodyParser({ enableTypes: ["json"] }) );
 
 app.use( baseRouter.routes() );
 app.use( baseRouter.allowedMethods() );

@@ -7,12 +7,9 @@ const baseUrl = "/api/v1";
 
 router.get( `${baseUrl}/transactions`, async (ctx) => {
 
-    //TODO -> move to controller
-    const transaction = new Transaction();
-
     try{
-        const allTransactions = await transaction.findAll();
-        ctx.body = allTransactions;
+        const allTransactions = await Transaction.findAll();
+        ctx.body = { data: allTransactions };
     } catch (error) {
         ctx.throw( 400, {
             error: {
@@ -21,4 +18,21 @@ router.get( `${baseUrl}/transactions`, async (ctx) => {
         } );
     }
 
+} );
+
+router.post( `${baseUrl}/transaction`, async (ctx) => {
+    
+    const request = ctx.request.body;
+    let transaction = new Transaction(request);
+
+    try{
+        await transaction.save();
+        ctx.body = { data: transaction };
+    } catch (error){
+        ctx.throw( 400, {
+            error: {
+                code: 400, message: 'Error saving transaction'
+            }
+        } )
+    }
 } );
