@@ -20,15 +20,18 @@ export class Transaction{
         return query( `SELECT * FROM transaction WHERE is_deleted = 0` );
     }
 
-    save = () => {
+    save = async() => {
         if( this.id == null ) { 
             //insert
             console.log( 'inserting to transaction table...' );
-            return query( `INSERT INTO 
+            let insertResult = await query( `INSERT INTO 
                                 transaction (coin,amount,currency_value_at_transaction_date,currency,transaction_date,creation_date) 
                            VALUES 
                                 (?,?,?,?,?,?)`,
-                           [ this.coin, this.amount, this.currencyValueAtTransactionDate, this.currency, this.transactionDate, this.creationDate ] )
+                           [ this.coin, this.amount, this.currencyValueAtTransactionDate, this.currency, this.transactionDate, this.creationDate ] );
+
+            this.id = insertResult.insertId;
+            return insertResult;
         } else {
             //update
             console.log( 'updating transaction table...' );
@@ -37,7 +40,7 @@ export class Transaction{
                            SET 
                                 coin = ?, amount = ?, currency_value_at_transaction_date = ?, currency = ?, transaction_date = ?, creation_date = ?, modified_date = ?, is_deleted = ?
                            WHERE id = ?`,
-                           [ this.coin, this.amount, this.currencyValueAtTransactionDate, this.currency, this.transactionDate, this.creationDate, this.modifiedDate, this.isDeleted ] );
+                           [ this.coin, this.amount, this.currencyValueAtTransactionDate, this.currency, this.transactionDate, this.creationDate, this.modifiedDate, this.isDeleted, this.id ] );
         }
     }
 
