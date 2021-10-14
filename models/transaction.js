@@ -24,14 +24,20 @@ export class Transaction{
         if( this.id == null ) { 
             //insert
             console.log( 'inserting to transaction table...' );
-            let insertResult = await query( `INSERT INTO 
-                                transaction (coin,amount,currency_value_at_transaction_date,currency,transaction_date,creation_date) 
-                           VALUES 
-                                (?,?,?,?,?,?)`,
-                           [ this.coin, this.amount, this.currencyValueAtTransactionDate, this.currency, this.transactionDate, this.creationDate ] );
+            try{
+                let insertResult = await query( `INSERT INTO 
+                                    transaction (coin,amount,currency_value_at_transaction_date,currency,transaction_date,creation_date) 
+                                    VALUES 
+                                            (?,?,?,?,?,?)`,
+                                    [ this.coin, this.amount, this.currencyValueAtTransactionDate, this.currency, this.transactionDate, this.creationDate ] );
 
-            this.id = insertResult.insertId;
-            return insertResult;
+                this.id = insertResult.insertId;
+                return insertResult;
+            }
+            catch(error){
+                throw error;
+            }
+
         } else {
             //update
             console.log( 'updating transaction table...' );

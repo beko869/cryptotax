@@ -31,8 +31,35 @@ router.post( `${baseUrl}/transaction`, async (ctx) => {
     } catch (error){
         ctx.throw( 400, {
             error: {
-                code: 400, message: 'Error saving transaction'
+                code: 400, message: 'Error saving transaction (0x1)'
             }
         } )
     }
+
+} );
+
+router.put( `${baseUrl}/transaction/:id`, async (ctx) => {
+    
+    const request = ctx.request.body;
+    let transaction = new Transaction(request);
+
+    if( !request.id ){
+        ctx.throw( 400, {
+            error: {
+                code: 400, message: 'Error saving transaction (0x2)'
+            }
+        } );
+    } else {
+        try{
+            await transaction.save();
+            ctx.body = { data: transaction };
+        } catch (error){
+            ctx.throw( 400, {
+                error: {
+                    code: 400, message: 'Error saving transaction (0x3)'
+                }
+            } )
+        }
+    }  
+    
 } );
