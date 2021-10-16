@@ -56,14 +56,13 @@ export class Transaction{
                            [ this.coin, this.amount, this.currencyValueAtTransactionDate, this.currency, this.transactionDate, this.creationDate, this.modifiedDate, this.isDeleted, this.id ] );
         }
     }
-    
+
 
     getCurrencyExchangeRateForDate = async( paraDate ) => {
         
         try{
             const response = await fetch( `${process.env.COINAPI_BASE_URL}/v1/exchangerate/${this.coin}/${this.currency}?time=${paraDate}`, {
                 method: 'get',
-                //body: JSON.stringify(body),
                 headers: {"X-CoinAPI-Key" : process.env.COINAPI_API_KEY } 
             } );
 
