@@ -1,4 +1,7 @@
 import {query} from '../db/db.js';
+import fetch from 'node-fetch';
+import dotenv from 'dotenv';
+dotenv.config();
 
 export class Transaction{
     
@@ -25,6 +28,8 @@ export class Transaction{
             //insert
             console.log( 'inserting to transaction table...' );
             try{
+                this.currencyValueAtTransactionDate = await this.getCurrencyExchangeRateForDate( this.transactionDate );
+
                 let insertResult = await query( `INSERT INTO 
                                     transaction (coin,amount,currency_value_at_transaction_date,currency,transaction_date,creation_date) 
                                     VALUES 
@@ -48,6 +53,26 @@ export class Transaction{
                            WHERE id = ?`,
                            [ this.coin, this.amount, this.currencyValueAtTransactionDate, this.currency, this.transactionDate, this.creationDate, this.modifiedDate, this.isDeleted, this.id ] );
         }
+    }
+
+    getCurrencyExchangeRateForDate = async( paraDate ) => {
+        
+        try{
+            const response = await fetch( `${process.env.COINAPI_BASE_URL}/v1/exchangerate/${this.coin}/${this.currency}?time=${paraDate}`, {
+                method: 'get',
+                //body: JSON.stringify(body),
+                headers: {"X-CoinAPI-Key" : process.env.COINAPI_API_KEY } 
+            } );
+
+            const responseJson = await response.json();
+
+            return parseFloat( responseJson.rate * this.amount );
+            
+        } catch (error) {
+
+             throw error;
+        }
+
     }
 
 }
