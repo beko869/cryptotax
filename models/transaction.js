@@ -19,9 +19,11 @@ export class Transaction{
 
     }
 
+
     static findAll = () => {
         return query( `SELECT * FROM transaction WHERE is_deleted = 0` );
     }
+
 
     save = async() => {
         if( this.id == null ) { 
@@ -54,6 +56,7 @@ export class Transaction{
                            [ this.coin, this.amount, this.currencyValueAtTransactionDate, this.currency, this.transactionDate, this.creationDate, this.modifiedDate, this.isDeleted, this.id ] );
         }
     }
+    
 
     getCurrencyExchangeRateForDate = async( paraDate ) => {
         

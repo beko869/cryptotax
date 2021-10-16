@@ -10,6 +10,7 @@ export const db = mysql.createConnection({
     database: process.env.DB_NAME
 });
   
+
 db.connect( (error) => {
     if( error ){
         throw error
@@ -17,6 +18,7 @@ db.connect( (error) => {
         console.log( 'Connected to Database.' );
     }
 });
+
 
 //make a promise from query function
 export const query = util.promisify(db.query).bind(db);

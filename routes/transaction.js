@@ -5,6 +5,7 @@ export const router = new Router();
 
 const baseUrl = "/api/v1";
 
+
 router.get( `${baseUrl}/transactions`, async (ctx) => {
 
     try{
@@ -19,6 +20,7 @@ router.get( `${baseUrl}/transactions`, async (ctx) => {
     }
 
 } );
+
 
 router.post( `${baseUrl}/transaction`, async (ctx) => {
     
@@ -37,6 +39,7 @@ router.post( `${baseUrl}/transaction`, async (ctx) => {
     }
 
 } );
+
 
 router.put( `${baseUrl}/transaction/:id`, async (ctx) => {
     
