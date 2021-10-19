@@ -25,6 +25,12 @@ export class Transaction{
     }
 
 
+    static find = async( paraTransactionID ) => {
+        const transactionResult = await query( `SELECT * FROM transaction WHERE id = ?`, [ paraTransactionID ] );
+        return new Transaction( transactionResult[0] );
+    }
+
+
     save = async() => {
         if( this.id == null ) { 
             //insert

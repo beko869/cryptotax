@@ -22,6 +22,34 @@ router.get( `${baseUrl}/transactions`, async (ctx) => {
 } );
 
 
+router.get( `${baseUrl}/transaction/:id`, async (ctx) => {
+
+    const request = ctx.request.params;
+    const transactionID = request.id;
+
+    if( !transactionID ){
+        ctx.throw( 400, {
+            error: {
+                code: 400, message: "Error requesting transaction (0x1)"
+            }
+        } );
+    }
+    else{
+        try{
+            const transaction = await Transaction.find( transactionID );
+            ctx.body = { data: transaction };
+        } catch (error) {
+            ctx.throw( 400, {
+                error: {
+                    code: 400, message: "Error requesting transaction (0x2)"
+                }
+            } );
+        }   
+    }
+
+} );
+
+
 router.post( `${baseUrl}/transaction`, async (ctx) => {
     
     const request = ctx.request.body;
@@ -46,7 +74,7 @@ router.put( `${baseUrl}/transaction/:id`, async (ctx) => {
     const request = ctx.request.body;
     let transaction = new Transaction(request);
 
-    if( !request.id ){
+    if( transaction.id == null ){
         ctx.throw( 400, {
             error: {
                 code: 400, message: 'Error saving transaction (0x2)'
