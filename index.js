@@ -6,9 +6,9 @@ import KoaBodyParser from "koa-bodyparser";
 export const app = new Koa();
 
 app.use( KoaBodyParser({ enableTypes: ["json"] }) );
+
 app.use(async (ctx, next) => {
     try {
-      
       await next();
     } catch (error) {
       console.log(error);
