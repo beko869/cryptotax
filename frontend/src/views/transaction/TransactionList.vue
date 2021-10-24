@@ -21,7 +21,7 @@ export default {
     }
   },
   methods: {
-    async findAllTransactions() {
+    findAllTransactions: async() => {
       try{
         const transactionResult = await TransactionDataService.findAll();
         this.transactions = transactionResult.data;
