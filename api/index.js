@@ -2,9 +2,11 @@ import dotenv from 'dotenv';
 dotenv.config();
 import Koa from "koa";
 import KoaBodyParser from "koa-bodyparser";
+import cors from '@koa/cors';
 
 export const app = new Koa();
 
+app.use( cors() )
 app.use( KoaBodyParser({ enableTypes: ["json"] }) );
 
 app.use(async (ctx, next) => {
