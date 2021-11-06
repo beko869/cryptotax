@@ -15,7 +15,7 @@
         </div>
         <div class="row">
           <div class="col-12">
-            <progress max="100" value="{{ progressValue }}"></progress>
+            <progress min="0" max="100" :value="computedProgressValue"></progress>
           </div>
         </div>
       </div>
@@ -29,16 +29,13 @@ export default {
     coin: String,
     amount: Number,
     transactionDate: Date,
-    progressValue: Number,
   },
-  methods: {
-    computeProgress: () => {
-        this.progressValue = 80;
+  computed: {
+    computedProgressValue() {
+      return 80;
     }
-  },
-  mounted() {
-    this.computeProgress();
   }
+
 };
 </script>
 

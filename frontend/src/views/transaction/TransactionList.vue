@@ -1,7 +1,10 @@
 <template>
   <div class="transaction-list container">
     <h1>Transactions</h1>
-    <TransactionListEntry coin="BTC" amount=0.0302 transactionDate="2020-05-05"/>
+    <TransactionListEntry v-for='transaction in transactions' 
+      :coin='transaction.coin'
+      :amount='transaction.amount'
+      :transactionDate='transaction.transactionDate'/>
   </div>
 </template>
 
@@ -21,7 +24,7 @@ export default {
     }
   },
   methods: {
-    findAllTransactions: async() => {
+    async findAllTransactions() {
       try{
         const transactionResult = await TransactionDataService.findAll();
         this.transactions = transactionResult.data;
@@ -31,7 +34,7 @@ export default {
       }
     }
   },
-  mounted() {
+  created() {
     this.findAllTransactions();
   },
 };
