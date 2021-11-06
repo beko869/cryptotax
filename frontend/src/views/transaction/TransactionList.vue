@@ -1,10 +1,7 @@
 <template>
   <div class="transaction-list container">
     <h1>Transactions</h1>
-    <TransactionListEntry v-for='transaction in transactions' 
-      :coin='transaction.coin'
-      :amount='transaction.amount'
-      :transactionDate='transaction.transactionDate'/>
+    <TransactionListEntry v-for="transaction in transactions" :coin="transaction.coin" :amount="transaction.amount" :transactionDate="new Date(transaction.transaction_date)"/>
   </div>
 </template>
 
@@ -27,7 +24,7 @@ export default {
     async findAllTransactions() {
       try{
         const transactionResult = await TransactionDataService.findAll();
-        this.transactions = transactionResult.data;
+        this.transactions = transactionResult.data.data;
         console.log(this.transactions);
       } catch (error) {
         console.log(error);

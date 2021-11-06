@@ -32,7 +32,10 @@ export default {
   },
   computed: {
     computedProgressValue() {
-      return 80;
+      const nowTS = Date.now();
+      const transactionDateTS = Date.parse( this.transactionDate );
+      const timeDiffInMilliSeconds = nowTS - transactionDateTS;
+      return hodlDays/365 * 100;
     }
   }
 
