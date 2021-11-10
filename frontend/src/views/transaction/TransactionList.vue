@@ -25,7 +25,6 @@ export default {
       try{
         const transactionResult = await TransactionDataService.findAll();
         this.transactions = transactionResult.data.data;
-        console.log(this.transactions);
       } catch (error) {
         console.log(error);
       }
